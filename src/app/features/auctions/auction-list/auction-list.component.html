@@ -1,0 +1,42 @@
+<div class="filter-container">
+  <input
+    type="text"
+    [(ngModel)]="searchKeyword"
+    (input)="onSearchKeywordChange()"
+    placeholder="Search auctions..."
+    class="search-input"
+  />
+
+  <select [(ngModel)]="filterStatus" (change)="onFilterStatusChange()">
+    <option value="all">All</option>
+    <option value="active">Active</option>
+    <option value="upcoming">Upcoming</option>
+    <option value="completed">Completed</option>
+  </select>
+
+  <select [(ngModel)]="sortOption" (change)="onSortOptionChange()">
+    <option value="">Sort By</option>
+    <option value="price">Price</option>
+    <option value="name">Name</option>
+  </select>
+</div>
+
+<div class="auction-list">
+  <mat-card *ngFor="let auction of paginatedAuctions">
+    <mat-card-title>{{ auction.name }}</mat-card-title>
+    <mat-card-content>
+      <p>Status: {{ auction.status }}</p>
+      <p>Current Bid: {{ auction.currentBid | currency }}</p>
+    </mat-card-content>
+    <button mat-button [routerLink]="['/auctions', auction.id]">View Details</button>
+  </mat-card>
+</div>
+
+<div class="pagination">
+  <button mat-raised-button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+    Previous
+  </button>
+  <button mat-raised-button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage * itemsPerPage >= filteredAuctions.length">
+    Next
+  </button>
+</div>

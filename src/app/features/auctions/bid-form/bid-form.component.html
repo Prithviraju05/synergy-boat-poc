@@ -1,0 +1,22 @@
+<form (ngSubmit)="placeBid(bidForm)" #bidForm="ngForm">
+    <mat-form-field>
+      <mat-label>Enter your bid</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="bidAmount"
+        name="bidAmount"
+        required
+        placeholder="Enter bid amount"
+      />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!bidForm.valid"
+    >
+      Place Bid
+    </button>
+  </form>
+  

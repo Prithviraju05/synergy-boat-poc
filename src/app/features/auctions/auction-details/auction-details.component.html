@@ -1,0 +1,39 @@
+<mat-card>
+    <mat-card-title>{{ auction?.name }}</mat-card-title>
+    <mat-card-content>
+      <p>Type: {{ auction?.type }}</p>
+      <p>Current Bid: {{ auction?.currentBid | currency }}</p>
+      <p>Time Left: {{ auction?.timeLeft }}</p>
+    </mat-card-content>
+  </mat-card>
+  
+  <!-- Bid Form -->
+  <form (ngSubmit)="placeBid()" #bidForm="ngForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your bid amount</mat-label>
+      <input
+        matInput
+        type="number"
+        name="bidAmount"
+        [(ngModel)]="bidAmount"
+        required
+        min="{{ auction?.currentBid + 1 }}"
+      />
+      <span *ngIf="bidForm.invalid">Please enter a valid bid amount.</span>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="bidForm.invalid">
+      Place Bid
+    </button>
+  </form>
+  
+  <!-- Bid History -->
+  <div>
+    <h3>Bid History</h3>
+    <mat-list *ngIf="bids && bids.length > 0; else noBids">
+      <mat-list-item *ngFor="let bid of bids">
+        {{ bid.bidder }}: {{ bid.amount | currency }}
+      </mat-list-item>
+    </mat-list>
+    <ng-template #noBids><p>No bids yet.</p></ng-template>
+  </div>
+  
