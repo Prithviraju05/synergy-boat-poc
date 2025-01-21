@@ -1,69 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { delay, map, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuctionService {
-  private dataUrl = 'assets/mock-data/mock-auction-data.json';
+  private dataUrl = 'assets/mock-data/mock-auction-data.json'; // Path to mock JSON file
+  private auctions: any[] = []; // Local cache for auction data
 
   constructor(private http: HttpClient) {}
 
-  private auctions: any = [
-    {
-      id: '1',
-      name: 'Luxury Yacht',
-      type: 'Yacht',
-      currentBid: 500000,
-      status: 'Active',
-    },
-    {
-      id: '2',
-      name: 'Fishing Boat',
-      type: 'Fishing',
-      currentBid: 20000,
-      status: 'Active',
-    }
-  ];
-
+  // Fetch auction data from the mock JSON file
   getAuctions(): Observable<any[]> {
-    return this.http.get<any[]>(this.dataUrl);
+    if (this.auctions.length > 0) {
+      return of(this.auctions); // Return cached data if available
+    }
+    return this.http.get<any[]>(this.dataUrl).pipe(
+      map((data) => {
+        this.auctions = data; // Cache the data
+        return this.auctions;
+      })
+    );
   }
 
-  getAuctionById2(id: any): Observable<any> {
-    return this.http.get<any>(`assets/mock-data/mock-auction-data.json`)
-      .pipe(map((auctions:any) => auctions.find((a:any) => a.id === id)));
-  }
-
+  // Fetch a single auction by ID
   getAuctionById(id: string): Observable<any> {
-    const auction = this.auctions.find((a:any) => a.id === id) || null;
-    console.log(auction);
-    
-    return of(auction); // Simulate an Observable response
+    return this.getAuctions().pipe(
+      map((auctions) => auctions.find((auction) => auction.id === id))
+    );
   }
 
-  // placeBid(auctionId: string, bidAmount: number): Observable<any> {
-  //   return this.http.post<any>(`/api/auction/${auctionId}/bid`, { bidAmount });
-  // }
-
-  placeBid2(auctionId: string, bidAmount: number): Observable<any> {
-    // Mock implementation: Replace with API call in a real setup
-    console.log(`Placing bid of ${bidAmount} for auction ID ${auctionId}`);
-    // return of({ success: true });
-    return of({ success: true, message: 'Bid placed successfully!' });
+  // Save a new bid for a specific auction
+  saveBid(id: string, newBid: number): Observable<any> {
+    const auction = this.auctions.find((a) => a.id === id);
+    if (auction) {
+      auction.bidHistory.push({
+        amount: newBid,
+        bidder: 'User', // Mock bidder name
+        timestamp: new Date().toISOString(),
+      });
+      auction.currentBid = newBid; // Update the current bid
+      return of(auction); // Return the updated auction
+    }
+    return of(null); // Return null if auction not found
   }
-
-  placeBid(auctionId: string, bidAmount: number): Observable<any> {
-    console.log(`Placing bid of ${bidAmount} for auction ID ${auctionId}`);
-    return this.http.get<any>('/assets/mock-bid-response.json'); // Mock response
-  }
-  
-  saveBid(auctionId: string, bid: any): Observable<any> {
-    console.log('Saving bid for auction', auctionId, bid); // Mock behavior
-    return of({ success: true }).pipe(delay(500)); // Simulate server delay
-  }
-  
-
-  
 }

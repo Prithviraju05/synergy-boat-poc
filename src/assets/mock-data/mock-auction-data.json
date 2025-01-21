@@ -1,27 +1,84 @@
 [
     {
-      "id": 1,
+      "id": "1",
       "name": "Luxury Yacht",
-      "type": "Sailboat",
+      "status": "active",
       "currentBid": 50000,
-      "status": "Active",
-      "timeLeft": "2h 30m"
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
     },
     {
-      "id": 2,
-      "name": "Speed Cruiser",
-      "type": "Motorboat",
-      "currentBid": 75000,
-      "status": "Upcoming",
-      "timeLeft": "5h 10m"
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
     },
     {
-      "id": 3,
-      "name": "Fishing Boat",
-      "type": "Utility Boat",
-      "currentBid": 30000,
-      "status": "Active",
-      "timeLeft": "1h 15m"
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
     }
   ]
   

@@ -8,17 +8,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BidFormComponent } from './bid-form/bid-form.component';
 import { AuctionDetailsComponent } from './auction-details/auction-details.component';
 import { MatInputModule } from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AuctionListComponent,
     BidFormComponent,
-    AuctionDetailsComponent
+    AuctionDetailsComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
@@ -31,8 +35,11 @@ import {MatListModule} from '@angular/material/list';
     NgxPaginationModule,
     AuctionsRoutingModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatTableModule,
+    ReactiveFormsModule
   ]
 })
-export class AuctionsModule {}
+export class AuctionsModule { }
 

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -10,11 +10,15 @@ const routes: Routes = [
       )
   },
   { path: '', redirectTo: '/auctions', pathMatch: 'full' },
-  { path: '**', redirectTo: '/auctions' } // Fallback route
+  { path: '**', redirectTo: '/auctions' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    })
+  ],
 })
 export class AppRoutingModule {}

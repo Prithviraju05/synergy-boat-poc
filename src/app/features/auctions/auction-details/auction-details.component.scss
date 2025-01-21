@@ -1,0 +1,73 @@
+.auction-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #3f51b5;
+  margin-bottom: 16px;
+}
+
+p {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.bid-history-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3f51b5;
+  margin-top: 20px;
+}
+
+.bid-history-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+
+  mat-header-cell {
+    background-color: #3c519ae8;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px 16px;
+  }
+
+  mat-cell {
+    text-align: center;
+    padding: 8px 16px;
+  }
+
+  mat-header-row {
+    background-color: #3c519ae8;
+  }
+
+  mat-row {
+    &:nth-child(odd) {
+      background-color: #f5f5f5;
+    }
+
+    &:nth-child(even) {
+      background-color: #ffffff;
+    }
+  }
+
+  // Responsive table
+  @media (max-width: 768px) {
+    mat-header-cell, mat-cell {
+      font-size: 14px;
+      padding: 8px 10px;
+    }
+
+    .view-details-btn {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+  }
+}
+
+.auction-status, .current-bid {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+p strong {
+  font-weight: normal;
+}

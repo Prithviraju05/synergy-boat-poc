@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Confirm Bid</h2>
+<div mat-dialog-content>
+  <p>You are about to place a bid of <strong>{{ data.amount | currency }}</strong>.</p>
+  <p>Do you want to proceed?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button  color="primary" (click)="onConfirm()">Confirm</button>
+</div>

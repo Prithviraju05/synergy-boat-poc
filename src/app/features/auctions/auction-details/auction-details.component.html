@@ -1,39 +1,31 @@
-<mat-card>
-    <mat-card-title>{{ auction?.name }}</mat-card-title>
-    <mat-card-content>
-      <p>Type: {{ auction?.type }}</p>
-      <p>Current Bid: {{ auction?.currentBid | currency }}</p>
-      <p>Time Left: {{ auction?.timeLeft }}</p>
-    </mat-card-content>
-  </mat-card>
-  
-  <!-- Bid Form -->
-  <form (ngSubmit)="placeBid()" #bidForm="ngForm">
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your bid amount</mat-label>
-      <input
-        matInput
-        type="number"
-        name="bidAmount"
-        [(ngModel)]="bidAmount"
-        required
-        min="{{ auction?.currentBid + 1 }}"
-      />
-      <span *ngIf="bidForm.invalid">Please enter a valid bid amount.</span>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="bidForm.invalid">
-      Place Bid
-    </button>
-  </form>
-  
-  <!-- Bid History -->
-  <div>
-    <h3>Bid History</h3>
-    <mat-list *ngIf="bids && bids.length > 0; else noBids">
-      <mat-list-item *ngFor="let bid of bids">
-        {{ bid.bidder }}: {{ bid.amount | currency }}
-      </mat-list-item>
-    </mat-list>
-    <ng-template #noBids><p>No bids yet.</p></ng-template>
-  </div>
-  
+<div *ngIf="auction">
+  <h2 class="auction-name">{{ auction.name }}</h2>
+  <p><strong>Status:</strong> {{ auction.status }}</p>
+  <p><strong>Current Bid:</strong> {{ auction.currentBid | currency }}</p>
+
+  <app-bid-form [auctionId]="auction.id" [currentBid]="auction.currentBid"
+    (bidPlaced)="onBidPlaced($event)"></app-bid-form>
+
+  <h3 class="bid-history-title">Bid History</h3>
+  <mat-table [dataSource]="auction.bidHistory" class="bid-history-table">
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+      <mat-cell *matCellDef="let bid">{{ bid.amount | currency }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="bidder">
+      <mat-header-cell *matHeaderCellDef> Bidder </mat-header-cell>
+      <mat-cell *matCellDef="let bid">{{ bid.bidder }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
+      <mat-cell *matCellDef="let bid">{{ bid.timestamp | date:'short' }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<div *ngIf="!auction">Loading auction details...</div>

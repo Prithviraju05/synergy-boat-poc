@@ -1,53 +1,76 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuctionService } from '../../../core/auction.service';
-// import { AuctionService } from 'src/app/services/auction.service';
 
 @Component({
   selector: 'app-auction-details',
   templateUrl: './auction-details.component.html',
   styleUrls: ['./auction-details.component.scss']
 })
-
-
 export class AuctionDetailsComponent implements OnInit {
-  auction:  any = null;
-  // bidAmount: number = 0;
-  bids: any[] = [];
-  bidAmount: number | null = null;
+  auction: any;
+  bidAmount: number = 0;
+  breadcrumbs: any;
+
+  displayedColumns: string[] = ['amount', 'bidder', 'timestamp'];
 
   constructor(
     private route: ActivatedRoute,
     private auctionService: AuctionService
-  ) {}
-
+  ) { }
 
   ngOnInit(): void {
-    const auctionId = this.route.snapshot.paramMap.get('id');
-    if (auctionId) {
-      this.auctionService.getAuctionById(auctionId).subscribe({
-        next: (data) => {
-          this.auction = data;
-          this.bids = data.bids || []; // Initialize bid history
-        },
+    // const id = this.route.snapshot.paramMap.get('id');
+    // if (id) {
+    //   this.fetchAuctionDetails(id);
+    // }
+    const id = this.route.snapshot.paramMap.get('id')!;
+    if (id) {
+      this.auctionService.getAuctionById(id).subscribe({
+        next: (data) => (this.auction = data),
         error: (err) => console.error('Error fetching auction details:', err),
       });
     }
+
+    this.breadcrumbs = [
+      { label: 'Home', url: '/' },
+      { label: 'Auctions', url: '/auctions' },
+      { label: 'Auction Details', url: `/auctions/${id}` },
+    ];
+  }
+
+  fetchAuctionDetails(id: string): void {
+    this.auctionService.getAuctions().subscribe({
+      next: (data) => {
+        this.auction = data.find((item: any) => item.id === id);
+      },
+      error: (err) => console.error('Error fetching auction details:', err),
+    });
   }
 
   placeBid(): void {
-    if (this.bidAmount && this.bidAmount > this.auction.currentBid) {
-      const newBid = { bidder: 'User123', amount: this.bidAmount };
-      this.bids.unshift(newBid); // Add bid to history
-      this.auction.currentBid = this.bidAmount; // Update current bid
-
-      // Simulate saving bid
-      this.auctionService.saveBid(this.auction.id, newBid).subscribe({
-        next: () => console.log('Bid placed successfully.'),
-        error: (err) => console.error('Error placing bid:', err),
+    if (this.bidAmount > this.auction.currentBid) {
+      this.auction.currentBid = this.bidAmount;
+      this.auction.bidHistory.push({
+        amount: this.bidAmount,
+        bidder: 'User',
+        time: new Date().toISOString(),
       });
-
-      this.bidAmount = null; // Reset bid amount
+    } else {
+      alert('Bid amount must be higher than the current bid.');
     }
   }
+
+  onBidPlaced(newBid: number): void {
+    this.auctionService.saveBid(this.auction.id, newBid).subscribe({
+      next: (updatedAuction) => {
+        if (updatedAuction) {
+          this.auction = updatedAuction;
+          console.log('Bid successfully placed!');
+        }
+      },
+      error: (err) => console.error('Error placing bid:', err),
+    });
+  }
+
 }

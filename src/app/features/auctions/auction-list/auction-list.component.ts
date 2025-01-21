@@ -9,13 +9,15 @@ import { AuctionService } from '../../../core/auction.service';
 export class AuctionListComponent implements OnInit {
   auctions: any[] = [];
   filteredAuctions: any[] = [];
-  filterStatus: string = 'all'; // Filter by status: all, active, or upcoming
-  searchKeyword: string = ''; // Keyword for search
-  sortOption: string = ''; // Sorting option: price, name, etc.
-  currentPage: number = 1; // Current page number
-  itemsPerPage: number = 5; // Items to display per page
+  filterStatus: string = 'all';
+  searchKeyword: string = '';
+  sortOption: string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
 
-  constructor(private auctionService: AuctionService) {}
+  displayedColumns: string[] = ['name', 'status', 'currentBid', 'actions'];
+
+  constructor(private auctionService: AuctionService) { }
 
   ngOnInit(): void {
     this.fetchAuctions();
@@ -24,11 +26,7 @@ export class AuctionListComponent implements OnInit {
   fetchAuctions(): void {
     this.auctionService.getAuctions().subscribe({
       next: (data) => {
-        this.auctions = data.map(auction => ({
-          ...auction,
-          bidHistory: auction.bidHistory || [],
-          currentBid: auction.currentBid || 0,
-        }));
+        this.auctions = data;
         this.filteredAuctions = [...this.auctions];
         this.applyFilters();
       },
@@ -36,25 +34,28 @@ export class AuctionListComponent implements OnInit {
     });
   }
 
+
   applyFilters(): void {
-    this.filteredAuctions = this.auctions
-      .filter((auction: any) =>
-        this.filterStatus === 'all' ? true : auction.status === this.filterStatus
-      )
-      .filter((auction: any) =>
-        this.searchKeyword
-          ? auction.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
-          : true
-      )
-      .sort((a: any, b: any) => {
-        if (this.sortOption === 'price') {
-          return a.currentBid - b.currentBid;
-        }
-        if (this.sortOption === 'name') {
-          return a.name.localeCompare(b.name);
-        }
-        return 0;
-      });
+    this.filteredAuctions = this.auctions.filter((auction) =>
+      this.filterStatus === 'all' ? true : auction.status === this.filterStatus
+    );
+
+    if (this.searchKeyword) {
+      this.filteredAuctions = this.filteredAuctions.filter((auction) =>
+        auction.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      );
+    }
+
+    this.applySorting();
+    this.currentPage = 1;
+  }
+
+  applySorting(): void {
+    if (this.sortOption === 'price') {
+      this.filteredAuctions.sort((a, b) => a.currentBid - b.currentBid);
+    } else if (this.sortOption === 'name') {
+      this.filteredAuctions.sort((a, b) => a.name.localeCompare(b.name));
+    }
   }
 
   onSearchKeywordChange(): void {
@@ -70,6 +71,9 @@ export class AuctionListComponent implements OnInit {
   }
 
   get paginatedAuctions(): any[] {
+    if (!this.filteredAuctions || this.filteredAuctions.length === 0) {
+      return [];
+    }
     const start = (this.currentPage - 1) * this.itemsPerPage;
     return this.filteredAuctions.slice(start, start + this.itemsPerPage);
   }
