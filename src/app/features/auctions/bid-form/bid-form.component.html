@@ -1,0 +1,15 @@
+<form [formGroup]="bidForm" (ngSubmit)="placeBid()">
+  <div>
+    <label for="bidAmount">Bid Amount:</label>
+    <input type="number" id="bidAmount" formControlName="bidAmount" [min]="currentBid + 1" required />
+    <div *ngIf="bidForm.controls['bidAmount'].invalid && bidForm.controls['bidAmount'].touched" class="error">
+      Please enter a valid bid amount greater than the current bid.
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit" [disabled]="!bidForm.valid">Place Bid</button>
+</form>

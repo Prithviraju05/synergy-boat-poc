@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "name": "Luxury Yacht",
+      "type": "Sailboat",
+      "currentBid": 50000,
+      "status": "Active",
+      "timeLeft": "2h 30m"
+    },
+    {
+      "id": 2,
+      "name": "Speed Cruiser",
+      "type": "Motorboat",
+      "currentBid": 75000,
+      "status": "Upcoming",
+      "timeLeft": "5h 10m"
+    },
+    {
+      "id": 3,
+      "name": "Fishing Boat",
+      "type": "Utility Boat",
+      "currentBid": 30000,
+      "status": "Active",
+      "timeLeft": "1h 15m"
+    }
+  ]
+  

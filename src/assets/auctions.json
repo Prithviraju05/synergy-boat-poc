@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Luxury Yacht",
+    "type": "Yacht",
+    "currentBid": 500000,
+    "status": "Active",
+    "biddingHistory": [
+      { "bidder": "User1", "amount": 490000, "timestamp": "2025-01-01T10:00:00Z" },
+      { "bidder": "User2", "amount": 500000, "timestamp": "2025-01-01T11:00:00Z" }
+    ],
+    "timeLeft": "2h 30m"
+  },
+  {
+    "id": 2,
+    "name": "Speedboat",
+    "type": "Speedboat",
+    "currentBid": 120000,
+    "status": "Upcoming",
+    "timeLeft": "12h 45m"
+  }
+]

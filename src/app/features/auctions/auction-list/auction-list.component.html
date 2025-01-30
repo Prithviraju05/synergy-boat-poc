@@ -1,0 +1,74 @@
+<div class="filter-container">
+  <div class="filter-item">
+    <input 
+      type="text" 
+      [(ngModel)]="searchKeyword" 
+      (input)="onSearchKeywordChange()" 
+      placeholder="Search auctions..." 
+      class="search-input" 
+      matInput 
+    />
+  </div>
+  
+
+  <div class="filter-item">
+    <mat-form-field appearance="fill" class="filter-field">
+      <mat-label>Filter by Status</mat-label>
+      <mat-select [(ngModel)]="filterStatus" (selectionChange)="onFilterStatusChange()">
+        <mat-option value="all">All</mat-option>
+        <mat-option value="active">Active</mat-option>
+        <mat-option value="upcoming">Upcoming</mat-option>
+        <mat-option value="completed">Completed</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="filter-item">
+    <mat-form-field appearance="fill" class="filter-field">
+      <mat-label>Sort By</mat-label>
+      <mat-select [(ngModel)]="sortOption" (selectionChange)="onSortOptionChange()">
+        <mat-option value="">None</mat-option>
+        <mat-option value="price">Price</mat-option>
+        <mat-option value="name">Name</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+
+<mat-table [dataSource]="paginatedAuctions" class="auction-table">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Auction Name </mat-header-cell>
+    <mat-cell *matCellDef="let auction"> {{ auction.name }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let auction"> {{ auction.status }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="currentBid">
+    <mat-header-cell *matHeaderCellDef> Current Bid </mat-header-cell>
+    <mat-cell *matCellDef="let auction"> {{ auction.currentBid | currency }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let auction">
+      <button mat-raised-button class="view-details-btn" [routerLink]="['/auctions', auction.id]">View Details</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div class="pagination">
+  <button mat-raised-button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+    Previous
+  </button>
+  <button mat-raised-button (click)="onPageChange(currentPage + 1)"
+    [disabled]="currentPage * itemsPerPage >= filteredAuctions.length">
+    Next
+  </button>
+</div>

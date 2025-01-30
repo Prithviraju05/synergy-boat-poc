@@ -1,0 +1,84 @@
+[
+    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    },    {
+      "id": "1",
+      "name": "Luxury Yacht",
+      "status": "active",
+      "currentBid": 50000,
+      "bidHistory": [
+        { "amount": 45000, "timestamp": "2025-01-19T10:00:00Z" },
+        { "amount": 50000, "timestamp": "2025-01-19T12:00:00Z" }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Speed Boat",
+      "status": "upcoming",
+      "currentBid": 20000,
+      "bidHistory": []
+    }
+  ]
+  
